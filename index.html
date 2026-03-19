@@ -6,6 +6,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script defer src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen">
@@ -14,7 +15,7 @@
     🍷 CrimsonCellar Vault
   </h1>
 
-  <!-- Analytics -->
+
   <div class="flex flex-wrap justify-center gap-4 mt-4">
     <div class="bg-white/70 backdrop-blur p-4 rounded-2xl shadow text-center w-32">
       <p class="text-sm">Wines</p>
@@ -27,13 +28,13 @@
     </div>
   </div>
 
-  <!-- Search -->
+  
   <div class="flex justify-center mt-6 px-4">
     <input id="searchInput" onkeyup="renderWines()" placeholder="🔍 Search wine..."
       class="border p-2 rounded w-full max-w-md shadow">
   </div>
 
-  <!-- Input -->
+ 
   <div class="flex flex-wrap justify-center mt-4 gap-2 px-4">
     <input id="wineName" placeholder="Wine name"
       class="border p-2 rounded shadow">
@@ -50,7 +51,7 @@
     </button>
   </div>
 
-  <!-- Board -->
+  
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-6">
 
     <div class="bg-white/60 backdrop-blur p-4 rounded-2xl shadow"
@@ -79,7 +80,15 @@
 </button>
 </div>
 
+<div id="alertBox" class="text-center text-red-600 font-bold mt-2"></div>
+
+<div class=",container mx-auto p-6">
+  <canvas id="stockChart" class="bg-[#FFF5E1] p-4 rounded shadow w-full max-w-4xl"></canvas>
+
+</div>
+
   </div>
+
 
 </body>
 </html>
