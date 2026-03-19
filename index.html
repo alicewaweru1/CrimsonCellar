@@ -2,104 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CrimsonCellar</title>
+  <title>Crimson Cellar Inventory</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="script.js"></script>
 </head>
-<body class="bg-cream-50 text-gray-800 font-sans">
 
-  <header class="bg-[#800020] text-white p-4 shadow-md">
-    <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-2xl font-bold">CrimsonCellar</h1>
-      <nav>
-        <ul class="flex gap-6">
-          <li><a href="index.html" class="hover:text-[#D4AF37]">Home</a></li>
-          <li><a href="about.html" class="hover:text-[#D4AF37]">About</a></li>
-          <li><a href="reports.html" class="hover:text-[#D4AF37]">Reports</a></li>
-          <li><a href="Inventory.html" class="hover:text-[#D4AF37]">Inventory</a></li>
-          <li><a href="contact.html" class="hover:text-[#D4AF37]">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<body class="bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen">
 
-  <section class="relative h-screen bg-cover bg-center" style="background-image: url('winebottles.png.jpg');">
-    <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center text-center px-4">
-      <h2 class="text-5xl md:text-6xl font-bold text-[#D4AF37] mb-4">Welcome to CrimsonCellar</h2>
-      <p class="text-white text-lg md:text-xl mb-6">Track your wine collection with elegance and ease.</p>
-      <a href="inventory.html" class="bg-[#D4AF37] text-[#800020] font-bold px-6 py-3 rounded hover:bg-[#ffd700]/90 transition">View Inventory</a>
-    </div>
-  </section>
+  <h1 class="text-3xl font-bold text-center mt-6 text-red-800">
+    🍷 Crimson Cellar Inventory
+  </h1>
 
-
-  <section class="py-16 bg-[#FFF5E1]">
-    <div class="container mx-auto text-center">
-      <h3 class="text-3xl font-bold mb-10 text-[#800020]">Your Collection At a Glance</h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-white p-6 rounded shadow hover:shadow-lg transition">
-          <img src="IMAGES/all.jpg"
-           class="w-full h-60 object-cover rounded-lg mb-4">
-          <h4 class="text-xl font-semibold mb-2">Total Bottles</h4>
-          <p class="text-3xl font-bold text-[#800020]">228</p>
-        </div>
-        <div class="bg-white p-6 rounded shadow hover:shadow-lg transition">
-          <img src="IMAGES/red.jpg"
-           class="w-full h-60 object-cover rounded-lg mb-4">
-          <h4 class="text-xl font-semibold mb-2">Red Wines</h4>
-          <p class="text-3xl font-bold text-[#800020]">72</p>
-        </div>
-        <div class="bg-white p-6 rounded shadow hover:shadow-lg transition">
-          <img src="IMAGES/white.jpg"
-          class="w-full h-60 object-cover rounded-lg mb-4">
-          <h4 class="text-xl font-semibold mb-2">White Wines</h4>
-          <p class="text-3xl font-bold text-[#800020]">56</p>
-        </div>
-        <div class="bg-white p-6 rounded shadow hover:shadow-lg transition">
-          <img src="IMAGES/rose.jpg"
-          class="w-full h-60 object-cover rounded-lg mb-4">
-          <h4 class="text-xl font-semibold mb-2">Rose Wines</h4>
-          <p class="text-3xl font-bold text-[#800020]">36</p>
-        </div>
-        <div class="bg-white p-6 rounded shadow hover:shadow-lg transition">
-          <img src="IMAGES/sparkling.jpg"
-          class="w-full h-60 object-cover rounded-lg mb-4">
-          <h4 class="text-xl font-semibold mb-2">Sparkling Wines</h4>
-          <p class="text-3xl font-bold text-[#800020]">42</p>
-        </div>
-    <div class="bg-white p-6 rounded shadow hover:shadow-lg transition">
-      <img src="IMAGES/dessert.jpg"
-      class="w-full h-60 object-cover rounded-lg mb-4">
-          <h4 class="text-xl font-semibold mb-2">Dessert Wines</h4>
-          <p class="text-3xl font-bold text-[#800020]">22</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-  <footer class="bg-[#800020] text-white py-12 px-6 md:px-20">
-  <div class="grid md:grid-cols-3 gap-8">
-    <div>
-      <h4 class="text-white font-semibold mb-3">About Us</h4>
-      <p>Providing quality wines for over 20 years.</p>
+  <!-- Analytics -->
+  <div class="flex flex-wrap justify-center gap-4 mt-4">
+    <div class="bg-white/70 backdrop-blur p-4 rounded-2xl shadow text-center w-32">
+      <p class="text-sm">Wines</p>
+      <h2 id="totalWines" class="text-xl font-bold">0</h2>
     </div>
 
-    <div>
-      <h4 class="text-white font-semibold mb-3">Contact</h4>
-      <p>Email: info@CrimsonCellar.com</p>
-      <p>Phone: +254 700 000000</p>
-    </div>
-
-    <div>
-      <h4 class="text-white font-semibold mb-3">Follow Us</h4>
-      <p>Facebook | Instagram | Twitter</p>
+    <div class="bg-white/70 backdrop-blur p-4 rounded-2xl shadow text-center w-32">
+      <p class="text-sm">Bottles</p>
+      <h2 id="totalQty" class="text-xl font-bold">0</h2>
     </div>
   </div>
 
-  <div class="text-center mt-10 border-t border-gray-700 pt-6">
-    © 2026 CrimsonCellar. All rights reserved.
+  <!-- Search -->
+  <div class="flex justify-center mt-6 px-4">
+    <input id="searchInput" onkeyup="renderWines()" placeholder="🔍 Search wine..."
+      class="border p-2 rounded w-full max-w-md shadow">
   </div>
-</footer>
 
+  <!-- Input -->
+  <div class="flex flex-wrap justify-center mt-4 gap-2 px-4">
+    <input id="wineName" placeholder="Wine name"
+      class="border p-2 rounded shadow">
+
+    <input id="wineQty" type="number" placeholder="Qty"
+      class="border p-2 rounded w-20 shadow">
+
+    <input id="wineImg" placeholder="Image URL"
+      class="border p-2 rounded w-full max-w-xs shadow">
+
+    <button onclick="addWine()"
+      class="bg-red-700 hover:bg-red-800 text-white px-4 rounded shadow">
+      Add
+    </button>
+  </div>
+
+  <!-- Board -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-6">
+
+    <div class="bg-white/60 backdrop-blur p-4 rounded-2xl shadow"
+      ondrop="drop(event,'instock')" ondragover="allowDrop(event)">
+      <h2 class="font-bold mb-2 text-green-600">In Stock</h2>
+      <div id="instock"></div>
+    </div>
+
+    <div class="bg-white/60 backdrop-blur p-4 rounded-2xl shadow"
+      ondrop="drop(event,'lowstock')" ondragover="allowDrop(event)">
+      <h2 class="font-bold mb-2 text-yellow-600">Low Stock</h2>
+      <div id="lowstock"></div>
+    </div>
+
+    <div class="bg-white/60 backdrop-blur p-4 rounded-2xl shadow"
+      ondrop="drop(event,'outofstock')" ondragover="allowDrop(event)">
+      <h2 class="font-bold mb-2 text-red-600">Out of Stock</h2>
+      <div id="outofstock"></div>
+    </div>
+
+  </div>
 
 </body>
 </html>
