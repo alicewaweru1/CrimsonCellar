@@ -54,28 +54,28 @@
   
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-6">
 
-    <div class="bg-white/60 backdrop-blur p-4 rounded-2xl shadow"
+    <div class="bg-[#FFF5E1] backdrop-blur p-4 rounded-2xl shadow"
       ondrop="drop(event,'instock')" ondragover="allowDrop(event)">
-      <h2 class="font-bold mb-2 text-green-600">In Stock</h2>
+      <h2 class="font-bold mb-2 text-green-700">In Stock</h2>
       <div id="instock"></div>
     </div>
 
-    <div class="bg-white/60 backdrop-blur p-4 rounded-2xl shadow"
+    <div class="bg-[#FFF5E1] backdrop-blur p-4 rounded-2xl shadow"
       ondrop="drop(event,'lowstock')" ondragover="allowDrop(event)">
-      <h2 class="font-bold mb-2 text-yellow-600">Low Stock</h2>
+      <h2 class="font-bold mb-2 text-orange-700">Low Stock</h2>
       <div id="lowstock"></div>
     </div>
 
-    <div class="bg-white/60 backdrop-blur p-4 rounded-2xl shadow"
+    <div class="bg-[#FFF5E1] backdrop-blur p-4 rounded-2xl shadow"
       ondrop="drop(event,'outofstock')" ondragover="allowDrop(event)">
-      <h2 class="font-bold mb-2 text-red-600">Out of Stock</h2>
+      <h2 class="font-bold mb-2 text-red-700">Out of Stock</h2>
       <div id="outofstock"></div>
     </div>
 
 
     <div class="flex justify-end px-6 mt-4">
       <button onclick="toggleDarkMode()" id="themeBtn"
-      class="bg-[#800020] text-white p-3 rounded-full shadow-lg fixed bottom-4 right-4">
+      class="bg-[#800020] text-white p-3 rounded-full shadow-lg absolute top-6 right-6">
       🍷🌙
 </button>
 </div>
