@@ -1,152 +1,72 @@
-let wines = JSON.parse(localStorage.getItem("wines")) || [];
+// --- THEME LOGIC ---
+function toggleTheme() {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+}
 
-const wineName = document.getElementById("wine-name");
-const wineQty = document.getElementById("wine-qty");
-const wineImage = document.getElementById("wine-image");
-const addBtn = document.getElementById("add-btn");
-const search = document.getElementById("search");
+// --- DATA LOGIC ---
+let inventory = JSON.parse(localStorage.getItem('crimsonCellarData')) || [];
 
-const inStock = document.getElementById("in-stock");
-const lowStock = document.getElementById("low-stock");
-const outStock = document.getElementById("out-stock");
+function addWine() {
+    const name = document.getElementById('wineName').value;
+    const qty = parseInt(document.getElementById('wineQty').value);
+    const price = parseFloat(document.getElementById('winePrice').value);
 
-const totalWines = document.getElementById("total-wines");
-const totalBottles = document.getElementById("total-bottles");
-
-const themeToggle = document.getElementById("theme-toggle");
-
-let chart;
-
-
-addBtn.addEventListener("click", () => {
-    const name = wineName.value.trim();
-    const qty = parseInt(wineQty.value);
-    const image = wineImage.value.trim();
-
-    if (!name || isNaN(qty)) {
-        alert("Fill all fields correctly!");
-        return;
+    if (name && !isNaN(qty) && !isNaN(price)) {
+        inventory.push({ name, qty, price });
+        saveAndRender();
+        document.getElementById('wineName').value = '';
+        document.getElementById('wineQty').value = '';
+        document.getElementById('winePrice').value = '';
     }
-
-    wines.push({ id: Date.now(), name, qty, image });
-    save();
-    clearInputs();
-});
-
-
-function save() {
-    localStorage.setItem("wines", JSON.stringify(wines));
-    render();
 }
 
-
-function clearInputs() {
-    wineName.value = "";
-    wineQty.value = "";
-    wineImage.value = "";
+function deleteWine(index) {
+    inventory.splice(index, 1);
+    saveAndRender();
 }
 
+function saveAndRender() {
+    localStorage.setItem('crimsonCellarData', JSON.stringify(inventory));
+    renderInventory();
+}
 
-function render(filtered = wines) {
-    inStock.innerHTML = "";
-    lowStock.innerHTML = "";
-    outStock.innerHTML = "";
+function renderInventory() {
+    const tableBody = document.getElementById('inventoryTable');
+    if (!tableBody) return;
 
-    let totalQty = 0;
+    let rows = '';
+    let grandTotalValue = 0;
+    let anyLowStock = false;
 
-    filtered.forEach(w => {
-        totalQty += w.qty;
+    inventory.forEach((item, index) => {
+        const itemTotal = item.qty * item.price;
+        grandTotalValue += itemTotal;
+        
+        let status = item.qty <= 0 ? 'Out of Stock' : (item.qty < 5 ? 'Low Stock' : 'In Stock');
+        let color = item.qty <= 0 ? 'text-red-500' : (item.qty < 5 ? 'text-orange-500' : 'text-green-500');
+        if (item.qty < 5) anyLowStock = true;
 
-        const div = document.createElement("div");
-        div.className = "bg-white dark:bg-gray-800 p-3 rounded-xl shadow";
-
-        div.innerHTML = `
-            <img src="${w.image || 'https://via.placeholder.com/80'}" class="w-16 h-16 object-cover rounded"/>
-            <h4 class="font-semibold">${w.name}</h4>
-            <p>Qty: ${w.qty}</p>
-            <div class="flex gap-2 mt-2">
-                <button onclick="inc(${w.id})" class="bg-green-500 text-white px-2 rounded">+</button>
-                <button onclick="dec(${w.id})" class="bg-yellow-500 text-white px-2 rounded">-</button>
-                <button onclick="del(${w.id})" class="bg-red-500 text-white px-2 rounded">X</button>
-            </div>
-        `;
-
-        if (w.qty === 0) outStock.appendChild(div);
-        else if (w.qty <= 5) lowStock.appendChild(div);
-        else inStock.appendChild(div);
+        rows += `
+            <tr class="border-t dark:border-gray-700">
+                <td class="p-4 font-bold">${item.name}</td>
+                <td class="p-4 text-center">${item.qty}</td>
+                <td class="p-4 text-center">$${itemTotal.toFixed(2)}</td>
+                <td class="p-4 text-center font-bold ${color}">${status}</td>
+                <td class="p-4 text-right">
+                    <button onclick="deleteWine(${index})" class="text-red-500 font-bold hover:underline">Delete</button>
+                </td>
+            </tr>`;
     });
 
-    totalWines.textContent = filtered.length;
-    totalBottles.textContent = totalQty;
-
-    renderChart();
+    tableBody.innerHTML = rows || '<tr><td colspan="5" class="p-10 text-center opacity-50">Cellar is empty.</td></tr>';
+    document.getElementById('totalValue').innerText =' $${grandTotalValue.toFixed(2)}';
+    
+    const alertBanner = document.getElementById('lowStockAlert');
+    if (alertBanner) {
+        anyLowStock ? alertBanner.classList.remove('hidden') : alertBanner.classList.add('hidden');
+    }
 }
 
-
-function inc(id) {
-    wines = wines.map(w => {
-        if (w.id === id) w.qty++;
-        return w;
-    });
-    save();
-}
-
-function dec(id) {
-    wines = wines.map(w => {
-        if (w.id === id && w.qty > 0) w.qty--;
-        return w;
-    });
-    save();
-}
-
-function del(id) {
-    wines = wines.filter(w => w.id !== id);
-    save();
-}
-
-
-search.addEventListener("input", () => {
-    const value = search.value.toLowerCase();
-    const filtered = wines.filter(w =>
-        w.name.toLowerCase().includes(value)
-    );
-    render(filtered);
-});
-
-
-function renderChart() {
-    const ctx = document.getElementById("wineChart");
-
-    const data = {
-        labels: wines.map(w => w.name),
-        datasets: [{
-            label: "Bottles",
-            data: wines.map(w => w.qty),
-        }]
-    };
-
-    if (chart) chart.destroy();
-
-    chart = new Chart(ctx, {
-        type: "bar",
-        data: data,
-    });
-}
-
-
-themeToggle.addEventListener("click", () => {
-    document.documentElement.classList.toggle("dark");
-
-    localStorage.setItem(
-        "theme",
-        document.documentElement.classList.contains("dark") ? "dark" : "light"
-    );
-});
-
-
-if (localStorage.getItem("theme") === "dark") {
-    document.documentElement.classList.add("dark");
-}
-
-
-render();
+// Initial Load
+renderInventory();
