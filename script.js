@@ -60,7 +60,7 @@ function renderInventory() {
     });
 
     tableBody.innerHTML = rows || '<tr><td colspan="5" class="p-10 text-center opacity-50">Cellar is empty.</td></tr>';
-    document.getElementById('totalValue').innerText =' $${grandTotalValue.toFixed(2)}';
+    document.getElementById('totalValue').innerText =`$${grandTotalValue.toFixed(2)}`;
     
     const alertBanner = document.getElementById('lowStockAlert');
     if (alertBanner) {
