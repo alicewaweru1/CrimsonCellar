@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory | Crimson Cellar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+    </script>
+</head>
+<body class="bg-[#FFF5E1] dark:bg-gray-900 text-[#4A0404] dark:text-gray-100 min-h-screen transition-colors duration-300">
+    <nav class="bg-[#800000] dark:bg-red-950 text-white p-5 flex justify-between items-center">
+        <h1 class="text-xl font-bold">CRIMSON CELLAR</h1>
+        <div class="flex gap-4 items-center">
+            <a href="index.html">Home</a>
+            <button onclick="toggleTheme()" class="bg-black/20 p-2 rounded-full">🌓</button>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto p-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+                <p class="text-xs uppercase opacity-60">Total Value</p>
+                <h3 id="totalValue" class="text-2xl font-bold text-[#800000] dark:text-red-400">$0.00</h3>
+            </div>
+            <div id="lowStockAlert" class="hidden col-span-3 bg-red-100 dark:bg-red-900 border-l-4 border-red-600 p-4 text-red-700 dark:text-red-100 animate-pulse">
+                ⚠️ <strong>Low Stock Alert:</strong> Some items are critically low!
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg mb-8 space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <input id="wineName" type="text" placeholder="Wine Name" class="p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+                <input id="wineQty" type="number" placeholder="Qty" class="p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+                <input id="winePrice" type="number" placeholder="Price per bottle" class="p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+                <button onclick="addWine()" class="bg-[#800000] text-white py-2 rounded font-bold hover:bg-black transition">Add Wine</button>
+            </div>
+            <hr class="dark:border-gray-700">
+            <div class="flex gap-4">
+                <input id="searchInput" oninput="renderInventory()" type="text" placeholder="🔍 Search wine name..." class="flex-grow p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+                <select id="filterStatus" onchange="renderInventory()" class="p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
+                    <option value="all">All Status</option>
+                    <option value="inStock">In Stock</option>
+                    <option value="lowStock">Low Stock</option>
+                    <option value="outOfStock">Out of Stock</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-gray-100 dark:bg-gray-700 text-xs uppercase opacity-70">
+                    <tr>
+                        <th class="p-4">Wine</th>
+                        <th class="p-4 text-center">Qty</th>
+                        <th class="p-4 text-center">Value</th>
+                        <th class="p-4 text-center">Status</th>
+                        <th class="p-4 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="inventoryTable"></tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
