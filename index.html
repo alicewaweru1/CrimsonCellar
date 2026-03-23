@@ -3,92 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <title>CrimsonCellar Vault</title>
-
   <script src="https://cdn.tailwindcss.com"></script>
-  <script defer src="script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body class="transition-colors duration-500">
-
-  <h1 class="text-3xl font-bold text-center mt-6 text-red-800">
-    🍷 CrimsonCellar Vault
-  </h1>
-
-
-  <div class="flex flex-wrap justify-center gap-4 mt-4">
-    <div class="bg-white/70 backdrop-blur p-4 rounded-2xl shadow text-center w-32">
-      <p class="text-sm">Wines</p>
-      <h2 id="totalWines" class="text-xl font-bold">0</h2>
-    </div>
-
-    <div class="bg-white/70 backdrop-blur p-4 rounded-2xl shadow text-center w-32">
-      <p class="text-sm">Bottles</p>
-      <h2 id="totalQty" class="text-xl font-bold">0</h2>
-    </div>
-  </div>
+<body class="bg-gray-100 dark:bg-gray-900 text-black dark:text-white">
 
   
-  <div class="flex justify-center mt-6 px-4">
-    <input id="searchInput" onkeyup="renderWines()" placeholder="🔍 Search wine..."
-      class="border p-2 rounded w-full max-w-md shadow">
-  </div>
-
- 
-  <div class="flex flex-wrap justify-center mt-4 gap-2 px-4">
-    <input id="wineName" placeholder="Wine name"
-      class="border p-2 rounded shadow">
-
-    <input id="wineQty" type="number" placeholder="Qty"
-      class="border p-2 rounded w-20 shadow">
-
-    <input id="wineImg" placeholder="Image URL"
-      class="border p-2 rounded w-full max-w-xs shadow">
-
-    <button onclick="addWine()"
-      class="bg-red-700 hover:bg-red-800 text-white px-4 rounded shadow">
-      Add
+  <div class="flex justify-between items-center p-4">
+    <h1 class="text-2xl font-bold text-red-600">🍷 CrimsonCellar Vault</h1>
+    <button id="theme-toggle" class="px-3 py-1 bg-black text-white dark:bg-white dark:text-black rounded">
+      Toggle Theme
     </button>
   </div>
 
   
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-6">
-
-    <div class="bg-[#FFF5E1] backdrop-blur p-4 rounded-2xl shadow"
-      ondrop="drop(event,'instock')" ondragover="allowDrop(event)">
-      <h2 class="font-bold mb-2 text-green-700">In Stock</h2>
-      <div id="instock"></div>
-    </div>
-
-    <div class="bg-[#FFF5E1] backdrop-blur p-4 rounded-2xl shadow"
-      ondrop="drop(event,'lowstock')" ondragover="allowDrop(event)">
-      <h2 class="font-bold mb-2 text-orange-700">Low Stock</h2>
-      <div id="lowstock"></div>
-    </div>
-
-    <div class="bg-[#FFF5E1] backdrop-blur p-4 rounded-2xl shadow"
-      ondrop="drop(event,'outofstock')" ondragover="allowDrop(event)">
-      <h2 class="font-bold mb-2 text-red-700">Out of Stock</h2>
-      <div id="outofstock"></div>
-    </div>
-
-
-    <div class="flex justify-end px-6 mt-4">
-      <button onclick="toggleDarkMode()" id="themeBtn"
-      class="bg-[#800020] text-white p-3 rounded-full shadow-lg absolute top-6 right-6">
-      🍷🌙
-</button>
-</div>
-
-<div id="alertBox" class="text-center text-red-600 font-bold mt-2"></div>
-
-<div class=",container mx-auto p-6">
-  <canvas id="stockChart" class="bg-[#FFF5E1] p-4 rounded shadow w-full max-w-4xl"></canvas>
-
-</div>
-
+  <div class="flex gap-10 justify-center text-lg">
+    <p>Wines: <span id="total-wines">0</span></p>
+    <p>Bottles: <span id="total-bottles">0</span></p>
   </div>
 
+  
+  <div class="flex gap-2 justify-center mt-4">
+    <input id="wine-name" placeholder="Wine name" class="p-2 rounded border">
+    <input id="wine-qty" type="number" placeholder="Qty" class="p-2 rounded border w-20">
+    <input id="wine-image" placeholder="Image URL" class="p-2 rounded border">
+    <button id="add-btn" class="bg-red-500 text-white px-4 rounded">Add</button>
+  </div>
 
+  
+  <div class="flex justify-center mt-4">
+    <input id="search" placeholder="Search wine..." class="p-2 w-1/2 rounded border">
+  </div>
+
+  
+  <div class="grid grid-cols-3 gap-4 p-4">
+    <div>
+      <h2 class="text-green-500 font-bold">In Stock</h2>
+      <div id="in-stock" class="flex flex-col gap-2"></div>
+    </div>
+
+    <div>
+      <h2 class="text-yellow-500 font-bold">Low Stock</h2>
+      <div id="low-stock" class="flex flex-col gap-2"></div>
+    </div>
+
+    <div>
+      <h2 class="text-red-500 font-bold">Out of Stock</h2>
+      <div id="out-stock" class="flex flex-col gap-2"></div>
+    </div>
+  </div>
+
+  
+  <div class="w-2/3 mx-auto mt-6">
+    <canvas id="wineChart"></canvas>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
