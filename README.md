@@ -1,4 +1,4 @@
-# 🍷 Crimson Cellar: Smart Wine Inventory Tracker
+# 🍷 Crimson Cellar: Smart Wine Inventory Tracker **[🔗 View Live Demo](https://alicewaweru1.github.io/CrimsonCellar/)**
 
 *Crimson Cellar* is an interactive web application designed to help wine companies move away from manual, error-prone tracking. It provides a real-time dashboard to monitor stock levels, calculate cellar value, and prevent lost sales.
 
