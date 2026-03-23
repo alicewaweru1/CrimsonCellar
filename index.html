@@ -1,64 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>CrimsonCellar Vault</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crimson Cellar | Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+    </script>
 </head>
+<body class="bg-[#FFF5E1] dark:bg-gray-900 text-[#4A0404] dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+    <nav class="bg-[#800000] dark:bg-red-950 text-white p-5 flex justify-between items-center shadow-xl">
+        <h1 class="text-2xl font-bold tracking-tighter">CRIMSON CELLAR</h1>
+        <div class="flex items-center gap-6">
+            <a href="index.html" class="hover:opacity-80">Home</a>
+            <a href="inventory.html" class="hover:opacity-80">Inventory</a>
+            <button onclick="toggleTheme()" class="p-2 bg-black/20 rounded-full">🌓</button>
+        </div>
+    </nav>
 
-<body class="bg-gray-100 dark:bg-gray-900 text-black dark:text-white">
+    <main class="flex-grow flex flex-col items-center justify-center text-center p-10">
+        <div class="max-w-3xl">
+            <h2 class="text-6xl font-black mb-6">Vintage Management, <span class="text-[#800000] dark:text-red-500">Modernized.</span></h2>
+            <p class="text-lg mb-8 opacity-90">Eliminate manual tracking errors and overstocking. Our interactive suite gives you total control over your wine inventory and value in real-time.</p>
+            
+            <div class="grid md:grid-cols-3 gap-6 mb-10">
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md border-b-4 border-[#800000]">
+                    <h3 class="font-bold mb-2">Real-time Tracking</h3>
+                    <p class="text-sm opacity-70">Add, edit, or remove bottles instantly.</p>
+                </div>
+                <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md border-b-4 border-[#800000]">
+                    <h3 class="font-bold mb-2">Value Analytics</h3>
+                    <p class="text-sm opacity-70">Calculate the total worth of your cellar.</p>
+                </div>
+                <div class="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-md border-b-4 border-[#800000]">
+                    <h3 class="font-bold mb-2">Low Stock Alerts</h3>
+                    <p class="text-sm opacity-70">Never run out of your best sellers.</p>
+                </div>
+            </div>
+            <a href="inventory.html" class="inline-block bg-[#800000] text-white px-10 py-4 rounded-lg font-bold hover:scale-105 transition transform">Go to Inventory</a>
+        </div>
+    </main>
 
-  
-  <div class="flex justify-between items-center p-4">
-    <h1 class="text-2xl font-bold text-red-600">🍷 CrimsonCellar Vault</h1>
-    <button id="theme-toggle" class="px-3 py-1 bg-black text-white dark:bg-white dark:text-black rounded">
-      Toggle Theme
-    </button>
-  </div>
-
-  
-  <div class="flex gap-10 justify-center text-lg">
-    <p>Wines: <span id="total-wines">0</span></p>
-    <p>Bottles: <span id="total-bottles">0</span></p>
-  </div>
-
-  
-  <div class="flex gap-2 justify-center mt-4">
-    <input id="wine-name" placeholder="Wine name" class="p-2 rounded border">
-    <input id="wine-qty" type="number" placeholder="Qty" class="p-2 rounded border w-20">
-    <input id="wine-image" placeholder="Image URL" class="p-2 rounded border">
-    <button id="add-btn" class="bg-red-500 text-white px-4 rounded">Add</button>
-  </div>
-
-  
-  <div class="flex justify-center mt-4">
-    <input id="search" placeholder="Search wine..." class="p-2 w-1/2 rounded border">
-  </div>
-
-  
-  <div class="grid grid-cols-3 gap-4 p-4">
-    <div>
-      <h2 class="text-green-500 font-bold">In Stock</h2>
-      <div id="in-stock" class="flex flex-col gap-2"></div>
-    </div>
-
-    <div>
-      <h2 class="text-yellow-500 font-bold">Low Stock</h2>
-      <div id="low-stock" class="flex flex-col gap-2"></div>
-    </div>
-
-    <div>
-      <h2 class="text-red-500 font-bold">Out of Stock</h2>
-      <div id="out-stock" class="flex flex-col gap-2"></div>
-    </div>
-  </div>
-
-  
-  <div class="w-2/3 mx-auto mt-6">
-    <canvas id="wineChart"></canvas>
-  </div>
-
-  <script src="script.js"></script>
+    <footer class="p-6 text-center border-t border-black/10 dark:border-white/10 opacity-60">
+        <p>&copy; 2026 Crimson Cellar Institute. Precision in every pour.</p>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
