@@ -1,10 +1,10 @@
-// --- THEME LOGIC ---
+
 function toggleTheme() {
     const isDark = document.documentElement.classList.toggle('dark');
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
 }
 
-// --- DATA LOGIC ---
+
 let inventory = JSON.parse(localStorage.getItem('crimsonCellarData')) || [];
 
 function addWine() {
@@ -68,5 +68,5 @@ function renderInventory() {
     }
 }
 
-// Initial Load
+
 renderInventory();
