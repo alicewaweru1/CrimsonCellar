@@ -3,67 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory | Crimson Cellar</title>
+    <title>Crimson Cellar | Inventory</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = { darkMode: 'class' }
-        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
-    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-[#FFF5E1] dark:bg-gray-900 text-[#4A0404] dark:text-gray-100 min-h-screen transition-colors duration-300">
-    <nav class="bg-[#800000] dark:bg-red-950 text-white p-5 flex justify-between items-center">
-        <h1 class="text-xl font-bold">CRIMSON CELLAR</h1>
-        <div class="flex gap-4 items-center">
-            <a href="index.html">Home</a>
-            <button onclick="toggleTheme()" class="bg-black/20 p-2 rounded-full">🌓</button>
+<body class="bg-zinc-950 text-white transition-colors duration-300">
+    <nav class="flex justify-between items-center p-6 border-b border-zinc-800 bg-zinc-900/50 sticky top-0 z-50">
+        <div class="text-2xl font-serif font-bold text-red-600">Crimson Cellar</div>
+        <div class="flex gap-8 items-center">
+            <a href="index.html" class="hover:text-red-500 transition">Home</a>
+            <a href="inventory.html" class="hover:text-red-500 transition border-b-2 border-red-600">Inventory</a>
+            <a href="analytics.html" class="hover:text-red-500 transition">Analytics</a>
+            <button id="themeToggle" class="p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition">
+                <i class="fas fa-moon"></i>
+            </button>
         </div>
     </nav>
 
-    <div class="max-w-6xl mx-auto p-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
-                <p class="text-xs uppercase opacity-60">Total Value</p>
-                <h3 id="totalValue" class="text-2xl font-bold text-[#800000] dark:text-red-400">$0.00</h3>
+    <div id="alertBanner" class="hidden bg-red-600 text-white p-2 text-center font-bold">
+        ⚠️ ATTENTION: Low stock detected in your cellar!
+    </div>
+
+    <main class="max-w-6xl mx-auto mt-10 px-6">
+        <header class="flex justify-between items-end mb-8">
+            <div>
+                <h1 class="text-4xl font-serif">Cellar Inventory</h1>
+                <p class="text-zinc-400 mt-2">Total Value: <span class="text-red-500 font-bold" id="totalValue">$0</span></p>
             </div>
-            <div id="lowStockAlert" class="hidden col-span-3 bg-red-100 dark:bg-red-900 border-l-4 border-red-600 p-4 text-red-700 dark:text-red-100 animate-pulse">
-                ⚠️ <strong>Low Stock Alert:</strong> Some items are critically low!
-            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 bg-zinc-900 p-4 rounded-xl">
+            <input type="text" id="searchInput" placeholder="Search wine name..." class="bg-zinc-800 border-none rounded p-3 focus:ring-2 ring-red-600 outline-none">
+            <select id="filterCategory" class="bg-zinc-800 border-none rounded p-3 focus:ring-2 ring-red-600 outline-none">
+                <option value="">All Categories</option>
+                <option value="Red">Red</option>
+                <option value="White">White</option>
+                <option value="Sparkling">Sparkling</option>
+                <option value="Dessert">Dessert</option>
+            </select>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg mb-8 space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <input id="wineName" type="text" placeholder="Wine Name" class="p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
-                <input id="wineQty" type="number" placeholder="Qty" class="p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
-                <input id="winePrice" type="number" placeholder="Price per bottle" class="p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
-                <button onclick="addWine()" class="bg-[#800000] text-white py-2 rounded font-bold hover:bg-black transition">Add Wine</button>
+        <form id="wineForm" class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-10 items-end">
+            <div>
+                <label class="block text-sm mb-1 text-zinc-500">Wine Name</label>
+                <input type="text" id="wineName" required class="w-full bg-zinc-900 border border-zinc-800 rounded p-2">
             </div>
-            <hr class="dark:border-gray-700">
-            <div class="flex gap-4">
-                <input id="searchInput" oninput="renderInventory()" type="text" placeholder="🔍 Search wine name..." class="flex-grow p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
-                <select id="filterStatus" onchange="renderInventory()" class="p-2 border rounded dark:bg-gray-700 dark:border-gray-600">
-                    <option value="all">All Status</option>
-                    <option value="inStock">In Stock</option>
-                    <option value="lowStock">Low Stock</option>
-                    <option value="outOfStock">Out of Stock</option>
+            <div>
+                <label class="block text-sm mb-1 text-zinc-500">Category</label>
+                <select id="wineCategory" required class="w-full bg-zinc-900 border border-zinc-800 rounded p-2">
+                    <option value="Red">Red</option>
+                    <option value="White">White</option>
+                    <option value="Sparkling">Sparkling</option>
+                    <option value="Dessert">Dessert</option>
                 </select>
             </div>
-        </div>
+            <div>
+                <label class="block text-sm mb-1 text-zinc-500">Quantity</label>
+                <input type="number" id="wineQty" required class="w-full bg-zinc-900 border border-zinc-800 rounded p-2">
+            </div>
+            <div>
+                <label class="block text-sm mb-1 text-zinc-500">Price ($)</label>
+                <input type="number" id="winePrice" required class="w-full bg-zinc-900 border border-zinc-800 rounded p-2">
+            </div>
+            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded transition">Add Wine</button>
+        </form>
 
-        <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow">
-            <table class="w-full text-left border-collapse">
-                <thead class="bg-gray-100 dark:bg-gray-700 text-xs uppercase opacity-70">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="bg-zinc-900 text-zinc-500 text-sm uppercase">
                     <tr>
                         <th class="p-4">Wine</th>
-                        <th class="p-4 text-center">Qty</th>
-                        <th class="p-4 text-center">Value</th>
-                        <th class="p-4 text-center">Status</th>
-                        <th class="p-4 text-right">Actions</th>
+                        <th class="p-4">Category</th>
+                        <th class="p-4">Quantity</th>
+                        <th class="p-4">Price</th>
+                        <th class="p-4">Actions</th>
                     </tr>
                 </thead>
-                <tbody id="inventoryTable"></tbody>
+                <tbody id="inventoryTable">
+                    </tbody>
             </table>
         </div>
-    </div>
+    </main>
+
     <script src="script.js"></script>
 </body>
 </html>
