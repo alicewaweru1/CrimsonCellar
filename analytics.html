@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crimson Cellar | Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-zinc-950 text-white">
+    <nav class="flex justify-between items-center p-6 border-b border-zinc-800 bg-zinc-900/50">
+        <div class="text-2xl font-serif font-bold text-red-600">Crimson Cellar</div>
+        <div class="flex gap-8 items-center">
+            <a href="index.html" class="hover:text-red-500 transition">Home</a>
+            <a href="inventory.html" class="hover:text-red-500 transition">Inventory</a>
+            <a href="analytics.html" class="hover:text-red-500 transition border-b-2 border-red-600">Analytics</a>
+            <button id="themeToggle" class="p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto mt-10 px-6">
+        <h1 class="text-4xl font-serif mb-10 text-center">Data Intelligence</h1>
+        
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+            <div class="bg-zinc-900 p-10 rounded-2xl border border-zinc-800">
+                <h3 class="text-zinc-500 uppercase text-xs mb-4 tracking-widest">Stock Distribution</h3>
+                <canvas id="stockChart"></canvas>
+            </div>
+            
+            <div class="bg-zinc-900 p-10 rounded-2xl border border-zinc-800">
+                <h3 class="text-red-600 uppercase font-bold mb-6">Vault Summary</h3>
+                <div class="space-y-4">
+                    <p class="text-2xl">Total Items: <span id="statItems" class="font-bold">0</span></p>
+                    <p class="text-2xl">Total Bottles: <span id="statBottles" class="font-bold">0</span></p>
+                    <p class="text-2xl">Total Value: <span id="statValue" class="font-bold text-red-500">$0</span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
