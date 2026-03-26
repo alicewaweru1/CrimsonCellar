@@ -7,18 +7,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-zinc-950 text-white transition-colors duration-300">
-    <nav class="flex justify-between items-center p-6 border-b border-zinc-800 bg-zinc-900/50 sticky top-0 z-50">
+<body class="bg-rose-950 text-rose-50 transition-colors duration-300">
+    <nav class="flex justify-between items-center p-6 border-b border-red-900 bg-zinc-900 shadow-md backdrop-blur-md sticky top-0 z-50">
         <div class="text-2xl font-serif font-bold text-red-600">Crimson Cellar</div>
         <div class="flex gap-8 items-center">
-            <a href="index.html" class="hover:text-red-500 transition">Home</a>
-            <a href="inventory.html" class="hover:text-red-500 transition border-b-2 border-red-600">Inventory</a>
+            <a href="index.html" class="hover:text-red-500 transition border-b-2 border-red-600">Home</a>
+            <a href="inventory.html" class="hover:text-red-500 transition">Inventory</a>
             <a href="analytics.html" class="hover:text-red-500 transition">Analytics</a>
-            <button id="themeToggle" class="p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition">
+            <button id="themeToggle" class="p-2 rounded-full bg-slate-800 hover:bg-rose-900 transition">
                 <i class="fas fa-moon"></i>
             </button>
         </div>
     </nav>
+
 
     <div id="alertBanner" class="hidden bg-red-600 text-white p-2 text-center font-bold">
         ⚠️ ATTENTION: Low stock detected in your cellar!
@@ -76,7 +77,7 @@
                         <th class="p-4">Category</th>
                         <th class="p-4">Quantity</th>
                         <th class="p-4">Price</th>
-                        <th class="p-4">Actions</th>
+                        <th class="p-4 text-left min-w-[120px]">Actions</th>
                     </tr>
                 </thead>
                 <tbody id="inventoryTable">
@@ -84,7 +85,13 @@
             </table>
         </div>
     </main>
-
+<footer class="w-full bg-zinc-900 mt-20 py-12 border-t border-zinc-800">
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <p class="text-zinc-500 text-sm tracking-wide">
+      &copy; 2026 <span class="text-zinc-300 font-medium">Crimson Cellar</span>. All rights reserved.
+    </p>
+  </div>
+</footer>
     <script src="script.js"></script>
 </body>
 </html>
