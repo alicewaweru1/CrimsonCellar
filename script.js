@@ -6,20 +6,22 @@ const savedTheme = localStorage.getItem('theme') || 'dark';
 applyTheme(savedTheme);
 
 themeToggle.addEventListener('click', () => {
-    const currentTheme = body.classList.contains('bg-white') ? 'light' : 'dark';
+    const currentTheme = body.classList.contains('bg-slate-900') ? 'dark' : 'light';
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     applyTheme(newTheme);
 });
 
 function applyTheme(theme) {
     if (theme === 'light') {
-        body.classList.remove('bg-zinc-950', 'text-white');
-        body.classList.add('bg-white', 'text-black');
+        body.classList.remove('bg-rose-950', 'text-rose-100');
+        body.classList.add('bg-[#F4F1EE]', 'text-[#5D101D]');
         themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        themeToggle.classList.replace('bg-slate-800', 'bg-rose-200')
     } else {
-        body.classList.remove('bg-white', 'text-black');
-        body.classList.add('bg-zinc-950', 'text-white');
+        body.classList.remove('bg-[#F4F1EE]', 'text-[#5D101D]');
+        body.classList.add('bg-rose-950', 'text-rose-100');
         themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        themeToggle.classList.replace('bg-rose-200', 'bg-slate-800');
     }
     localStorage.setItem('theme', theme);
 }
@@ -74,7 +76,8 @@ function renderTable() {
             <td class="p-4 text-zinc-400">${w.category}</td>
             <td class="p-4 ${w.qty < 5 ? 'text-red-500 font-bold' : ''}">${w.qty}</td>
             <td class="p-4">$${w.price}</td>
-            <td class="p-4">
+            <td class="p-4 whitespace-nowrap">
+            <button onclick="editWine(${w.id})" class="text-blue-500 mr-4">Edit</button>
                 <button onclick="deleteWine(${w.id})" class="text-red-500">Del</button>
             </td>
         </tr>
@@ -90,6 +93,25 @@ function deleteWine(id) {
     saveAndRender();
 }
 
+function editWine(id) {
+
+    const wine = wines.find(w => w.id === id);
+    if (!wine) return;
+
+
+    const newName = prompt("Edit Wine Name:", wine.name);
+    const newQty = prompt("Edit Quantity:", wine.qty);
+    const newPrice = prompt("Edit Price:", wine.price);
+
+
+    if (newName && newQty && newPrice) {
+        wine.name = newName;
+        wine.qty = parseInt(newQty);
+        wine.price = parseFloat(newPrice);
+
+        saveAndRender();
+    }
+}
 function updateStats() {
     const total = wines.reduce((sum, w) => sum + (w.qty * w.price), 0);
     const totalBottles = wines.reduce((sum, w) => sum + w.qty, 0);
